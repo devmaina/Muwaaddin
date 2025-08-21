@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,12 +6,12 @@
     <title data-en="Muwaaddin Platform" data-so="Goobta Muwaaddin">Muwaaddin Platform</title>
     <!-- Favicon from CDN -->
     <link rel="icon" href="https://via.placeholder.com/32x32">
-    <!-- Montserrat Font from Google Fonts -->
+    <!-- Poppins Font from Google Fonts (similar to Century Gothic) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Iconify for icons -->
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons (more reliable than Iconify) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2M6c1aB3r/D6p4vM3N2fQ4oQ7q5Q+Q6G1U5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
             --primary-bg: #222222;
@@ -23,7 +23,7 @@
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             background-color: var(--secondary-bg);
@@ -501,30 +501,109 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
+        /* Mobile Menu and Hamburger Button */
+        .hamburger-menu {
+            display: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--primary-text);
+            padding: 5px;
+            margin-left: 20px;
+        }
+        
+        .mobile-nav {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            right: -100%; /* Start off-screen */
+            width: 70%;
+            height: 100%;
+            background-color: var(--primary-bg);
+            z-index: 1000;
+            transition: right 0.4s ease-in-out;
+            padding: 20px;
+            box-shadow: -5px 0 10px rgba(0, 0, 0, 0.3);
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .mobile-nav.is-active {
+            display: flex;
+            right: 0; /* Slide in */
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            color: var(--primary-text);
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 50px 0 20px; /* Space from the top */
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .mobile-nav li {
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .mobile-nav a {
+            display: block;
+            padding: 10px;
+            width: 100%;
+            text-decoration: none;
+            color: var(--primary-text);
+            font-weight: 500;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-nav .lang-toggle, .mobile-nav .search-icon, .mobile-nav .social-icons {
+            margin: 10px 0;
+            width: 100%;
+            padding-left: 10px;
+        }
+
+        .mobile-nav .lang-toggle span, .mobile-nav .search-icon i {
+            color: var(--primary-text);
+        }
+        
+        .mobile-nav .social-icons a {
+            font-size: 1.5em;
+            margin-right: 20px;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
-            .top-bar {
-                flex-direction: column;
-                align-items: center;
+            .top-bar, .main-nav ul, .search-icon {
+                display: none;
             }
-
+            
+            .hamburger-menu {
+                display: block;
+            }
+            
             .main-nav {
-                flex-direction: column;
-            }
-
-            .main-nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .main-nav li {
-                margin: 5px 10px;
+                justify-content: space-between;
+                align-items: center;
             }
             
             .hero-content {
                 flex-direction: column;
             }
-
+            
             .footer-content {
                 flex-direction: column;
                 align-items: center;
@@ -570,10 +649,10 @@
                     <span data-en="Thursday, August 21, 2025" data-so="Khamiista, Ogosto 21, 2025">Thursday, August 21, 2025</span>
                 </div>
                 <div class="social-icons">
-                    <a href="#"><iconify-icon icon="mingcute:facebook-fill"></iconify-icon></a>
-                    <a href="#"><iconify-icon icon="mingcute:twitter-x-fill"></iconify-icon></a>
-                    <a href="#"><iconify-icon icon="mingcute:instagram-fill"></iconify-icon></a>
-                    <a href="#"><iconify-icon icon="mingcute:linkedin-fill"></iconify-icon></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
                 <div class="lang-toggle">
                     <span id="lang-en" class="active">EN</span> | <span id="lang-so">SO</span>
@@ -584,6 +663,7 @@
                     <img src="https://via.placeholder.com/50x50/333333/FFFFFF?text=Logo" alt="Muwaaddin Logo">
                     <a href="#" data-en="MUWAADDIN" data-so="MUWAADDIN">MUWAADDIN</a>
                 </div>
+                <!-- Desktop Nav -->
                 <ul>
                     <li><a href="#" data-en="Home" data-so="Guriga">Home</a></li>
                     <li><a href="#" data-en="Politics" data-so="Siyaasad">Politics</a></li>
@@ -594,17 +674,47 @@
                     <li><a href="#" data-en="About" data-so="Ku saabsan">About</a></li>
                 </ul>
                 <div class="search-icon">
-                    <a href="#"><iconify-icon icon="mingcute:search-line"></iconify-icon></a>
+                    <a href="#"><i class="fas fa-search"></i></a>
+                </div>
+                <!-- Hamburger Menu for Mobile -->
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <i class="fas fa-bars"></i>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Mobile Navigation Menu -->
+    <nav class="mobile-nav" id="mobile-nav">
+        <span class="mobile-nav-close" id="mobile-nav-close">&times;</span>
+        <ul>
+            <li><a href="#" data-en="Home" data-so="Guriga">Home</a></li>
+            <li><a href="#" data-en="Politics" data-so="Siyaasad">Politics</a></li>
+            <li><a href="#" data-en="Opinion" data-so="Ra'yi">Opinion</a></li>
+            <li><a href="#" data-en="Culture" data-so="Dhaqan">Culture</a></li>
+            <li><a href="#" data-en="Multimedia" data-so="Multimedia">Multimedia</a></li>
+            <li><a href="#" data-en="Interviews" data-so="Wareysiyo">Interviews</a></li>
+            <li><a href="#" data-en="About" data-so="Ku saabsan">About</a></li>
+        </ul>
+        <div class="lang-toggle">
+            <span id="lang-en-mobile" class="active">EN</span> | <span id="lang-so-mobile">SO</span>
+        </div>
+        <div class="search-icon">
+            <a href="#"><i class="fas fa-search"></i></a>
+        </div>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-x-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container hero-content">
             <div class="main-article">
-                <img src="https://source.unsplash.com/photo/a-colorful-building-with-a-red-roof-and-a-blue-sky-in-the-background-P2c_3_yEaOE" alt="Political Article Image">
+                <img src="https://images.unsplash.com/photo-1542435503-90d5754b732d?q=80&w=1770&auto=format&fit=crop" alt="Political Article Image">
                 <div class="main-article-text">
                     <p data-en="POLITICS" data-so="SIYAASAD">POLITICS</p>
                     <h1><a href="#" data-en="Siad Barre, myth and the spectacle of power" data-so="Siyaad Barre, halyeey iyo muuqaalka awoodda">Siad Barre, myth and the spectacle of power</a></h1>
@@ -613,21 +723,21 @@
             </div>
             <div class="side-news">
                 <div class="news-card">
-                    <img src="https://source.unsplash.com/photo/a-group-of-people-sitting-at-a-table-in-a-room-5W5v_3u-PjA" alt="Interview Image">
+                    <img src="https://images.unsplash.com/photo-1582210878566-6b22c7a31b7a?q=80&w=1770&auto=format&fit=crop" alt="Interview Image">
                     <div class="news-card-content">
                         <span data-en="INTERVIEWS" data-so="WAREYSIYO">INTERVIEWS</span>
                         <h3><a href="#" data-en="Abdirahman Badiyow &quot;I want us to reconcile...&quot;" data-so="Cabdiraxmaan Baadiyow &quot;Waxaan rabaa inaan heshiinno...&quot;">Abdirahman Badiyow "I want us to reconcile..."</a></h3>
                     </div>
                 </div>
                 <div class="news-card">
-                    <img src="https://source.unsplash.com/photo/a-man-standing-in-front-of-a-graffiti-wall-4811985" alt="Fiction Image">
+                    <img src="https://images.unsplash.com/photo-1583321527715-181829e00661?q=80&w=1770&auto=format&fit=crop" alt="Fiction Image">
                     <div class="news-card-content">
                         <span data-en="FICTION" data-so="KHAYAALI">FICTION</span>
                         <h3><a href="#" data-en="Was I created for suffering?" data-so="Ma waxaan loo abuuray dhib?">Was I created for suffering?</a></h3>
                     </div>
                 </div>
                 <div class="news-card">
-                    <img src="https://source.unsplash.com/photo/a-close-up-of-a-bunch-of-books-on-a-table-5rW_c_7200E" alt="Opinion Image">
+                    <img src="https://images.unsplash.com/photo-1581412038752-02c3817f5412?q=80&w=1770&auto=format&fit=crop" alt="Opinion Image">
                     <div class="news-card-content">
                         <span data-en="OPINION" data-so="RA'YI">OPINION</span>
                         <h3><a href="#" data-en="How to learn the Somali language" data-so="Sidee loo bartaa luqadda Soomaaliga">How to learn the Somali language</a></h3>
@@ -646,7 +756,7 @@
             </div>
             <div class="politics-grid">
                 <div class="politics-main-card">
-                    <img src="https://source.unsplash.com/photo/a-group-of-men-in-suits-are-standing-together-in-a-room-h7FqWwH3948" alt="Featured Politics Article Image">
+                    <img src="https://images.unsplash.com/photo-1518175510444-48f5539d0d3d?q=80&w=1770&auto=format&fit=crop" alt="Featured Politics Article Image">
                     <div class="content">
                         <p data-en="POLITICS" data-so="SIYAASAD">POLITICS</p>
                         <h3 data-en="Understanding Irro's foreign policy" data-so="Fahamka siyaasadda arrimaha dibedda ee Cirro">Understanding Irro's foreign policy</h3>
@@ -654,28 +764,28 @@
                 </div>
                 <div class="politics-side-grid">
                     <div class="politics-side-card">
-                        <img src="https://source.unsplash.com/photo/a-man-is-sitting-at-a-table-in-a-room-8-z00-Uj7G84" alt="Politics Article Image">
+                        <img src="https://images.unsplash.com/photo-1550592965-0a70659a5310?q=80&w=1770&auto=format&fit=crop" alt="Politics Article Image">
                         <div class="politics-side-content">
                             <span data-en="POLITICS" data-so="SIYAASAD">POLITICS</span>
                             <h4 data-en="The enemy of my enemy is my friend" data-so="Cadowga cadowgayga waa saaxiibkay">The enemy of my enemy is my friend</h4>
                         </div>
                     </div>
                     <div class="politics-side-card">
-                        <img src="https://source.unsplash.com/photo/a-group-of-buildings-with-a-clock-tower-on-top-of-it-H_e1gI4bV40" alt="Politics Article Image">
+                        <img src="https://images.unsplash.com/photo-1620677510978-65103a85191a?q=80&w=1770&auto=format&fit=crop" alt="Politics Article Image">
                         <div class="politics-side-content">
                             <span data-en="POLITICS" data-so="SIYAASAD">POLITICS</span>
                             <h4 data-en="The grift tank" data-so="Haanta laaluushka">The grift tank</h4>
                         </div>
                     </div>
                     <div class="politics-side-card">
-                        <img src="https://source.unsplash.com/photo/a-close-up-of-a-person-s-face-with-their-eyes-closed-50a8_4R70-o" alt="Politics Article Image">
+                        <img src="https://images.unsplash.com/photo-1549725807-6c8411d7f6c6?q=80&w=1770&auto=format&fit=crop" alt="Politics Article Image">
                         <div class="politics-side-content">
                             <span data-en="POLITICS" data-so="SIYAASAD">POLITICS</span>
                             <h4 data-en="The reopening of a border between Eritrea and Tigray" data-so="Dib u furista xuduudda u dhaxeysa Ereteriya iyo Tigray">The reopening of a border between Eritrea and Tigray</h4>
                         </div>
                     </div>
                     <div class="politics-side-card">
-                        <img src="https://source.unsplash.com/photo/a-group-of-people-standing-in-a-room-hI06b7aB3U" alt="Politics Article Image">
+                        <img src="https://images.unsplash.com/photo-1582210878566-6b22c7a31b7a?q=80&w=1770&auto=format&fit=crop" alt="Politics Article Image">
                         <div class="politics-side-content">
                             <span data-en="POLITICS" data-so="SIYAASAD">POLITICS</span>
                             <h4 data-en="A new era for Somali-Kenyan relations" data-so="Xiriir cusub oo u bilowday Soomaaliya iyo Kenya">A new era for Somali-Kenyan relations</h4>
@@ -695,7 +805,7 @@
             </div>
             <div class="opinion-grid">
                 <div class="opinion-main-card">
-                    <img src="https://source.unsplash.com/photo/a-street-with-buildings-and-cars-on-it-s4h76_j8e0o" alt="Main Opinion Article Image">
+                    <img src="https://images.unsplash.com/photo-1560946026-b84711654497?q=80&w=1770&auto=format&fit=crop" alt="Main Opinion Article Image">
                     <div class="opinion-main-content">
                         <h3 data-en="Mogadishu: a city that won't love us back" data-so="Muqdisho: magaalo aan noo jeclaan doonin">Mogadishu: a city that won't love us back</h3>
                         <p data-en="Amid loss, hope, war, and the fragile freedom of choice, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." data-so="Amid loss, hope, war, and the fragile freedom of choice, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">Amid loss, hope, war, and the fragile freedom of choice, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -754,17 +864,17 @@
                     <img src="https://via.placeholder.com/50x50/333333/FFFFFF?text=Logo" alt="Muwaaddin Logo">
                     <span data-en="MUWAADDIN" data-so="MUWAADDIN">MUWAADDIN</span>
                     <div class="social-icons">
-                         <a href="#"><iconify-icon icon="mingcute:facebook-fill"></iconify-icon></a>
-                         <a href="#"><iconify-icon icon="mingcute:twitter-x-fill"></iconify-icon></a>
-                         <a href="#"><iconify-icon icon="mingcute:instagram-fill"></iconify-icon></a>
-                         <a href="#"><iconify-icon icon="mingcute:linkedin-fill"></iconify-icon></a>
+                         <a href="#"><i class="fab fa-facebook-f"></i></a>
+                         <a href="#"><i class="fab fa-x-twitter"></i></a>
+                         <a href="#"><i class="fab fa-instagram"></i></a>
+                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="newsletter">
                     <h4 data-en="Subscribe to our newsletter" data-so="Is-diiwaan geli warqadeena">Subscribe to our newsletter</h4>
                     <div class="input-group">
                         <input type="email" placeholder="Enter your email here...">
-                        <button type="submit"><iconify-icon icon="mingcute:paper-plane-fill"></iconify-icon></button>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
                 <div class="footer-links">
@@ -787,20 +897,30 @@
         </div>
     </footer>
 
-    <!-- JavaScript for language conversion and backend script placeholders -->
+    <!-- JavaScript for language conversion and menu functionality -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const langEN = document.getElementById('lang-en');
             const langSO = document.getElementById('lang-so');
+            const langENMobile = document.getElementById('lang-en-mobile');
+            const langSOMobile = document.getElementById('lang-so-mobile');
+            const hamburgerMenu = document.getElementById('hamburger-menu');
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileNavClose = document.getElementById('mobile-nav-close');
 
             function setLanguage(lang) {
                 // Set the active class on the selected language toggle
                 langEN.classList.remove('active');
                 langSO.classList.remove('active');
+                langENMobile.classList.remove('active');
+                langSOMobile.classList.remove('active');
+                
                 if (lang === 'en') {
                     langEN.classList.add('active');
+                    langENMobile.classList.add('active');
                 } else {
                     langSO.classList.add('active');
+                    langSOMobile.classList.add('active');
                 }
                 
                 // Update the text content of all elements with data attributes
@@ -816,6 +936,17 @@
             // Add event listeners for language switching
             langEN.addEventListener('click', () => setLanguage('en'));
             langSO.addEventListener('click', () => setLanguage('so'));
+            langENMobile.addEventListener('click', () => setLanguage('en'));
+            langSOMobile.addEventListener('click', () => setLanguage('so'));
+
+            // Hamburger menu functionality
+            hamburgerMenu.addEventListener('click', () => {
+                mobileNav.classList.add('is-active');
+            });
+
+            mobileNavClose.addEventListener('click', () => {
+                mobileNav.classList.remove('is-active');
+            });
 
             // Set default language on page load
             setLanguage('en');
