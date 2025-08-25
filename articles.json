@@ -1,0 +1,14 @@
+{
+  "id": "abc123",
+  "category": "politics",
+  "image": "data:image/webp;base64,...",
+  "author": "Mahad Weli",
+  "titles": {"en":"Title EN","so":"Ciwaan SO","ar":"عنوان AR"},
+  "bodies": {"en":"...","so":"...","ar":"..."},
+  "tags": ["tag1","tag2"],
+  "slug": "title-en",
+  "status": "published",
+  "createdAt": "2025-08-21T11:22:33.000Z",
+  "updatedAt": "2025-08-21T11:22:33.000Z",
+  "readMinutes": 4
+}
