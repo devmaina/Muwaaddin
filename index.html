@@ -966,5 +966,82 @@
             }
         });
     </script>
+
+<script>
+(async function () {
+  const res = await fetch('/data/articles.json');
+  const payload = await res.json().catch(()=>({articles:[]}));
+  const articles = Array.isArray(payload) ? payload : (payload.articles||[]);
+  const published = articles.filter(a=>a.status==='published');
+
+  // Helper
+  const latestByCategory = (cat, n=1) =>
+    published.filter(a=>a.category===cat)
+             .sort((a,b)=>new Date(b.updatedAt)-new Date(a.updatedAt))
+             .slice(0,n);
+
+  // --- HERO (main article)
+  const main = published.sort((a,b)=>new Date(b.updatedAt)-new Date(a.updatedAt))[0];
+  if (main) {
+    const heroImg = document.querySelector('.main-article img');
+    const heroCat = document.querySelector('.main-article-text p[data-en]');
+    const heroTitle = document.querySelector('.main-article-text h1 a[data-en]');
+    const heroDeck = document.querySelector('.main-article-text p[data-en]:not(:first-child)');
+
+    if (heroImg && main.image) heroImg.src = main.image;
+    if (heroCat) { heroCat.setAttribute('data-en', main.category.toUpperCase()); heroCat.textContent = main.category.toUpperCase(); }
+    if (heroTitle) { heroTitle.setAttribute('href', `/${main.category}/${main.slug}`); heroTitle.setAttribute('data-en', main.titles.en); heroTitle.textContent = main.titles.en || 'Untitled'; }
+    if (heroDeck) { heroDeck.setAttribute('data-en', (main.bodies.en||'').slice(0,160)+'…'); heroDeck.textContent = (main.bodies.en||'').slice(0,160)+'…'; }
+  }
+
+  // --- SIDE NEWS (3 latest regardless of category)
+  const side = document.querySelectorAll('.side-news .news-card');
+  const top3 = published.slice(0,3);
+  side.forEach((card, i) => {
+    const a = top3[i]; if (!a) return;
+    const img = card.querySelector('img');
+    const tag = card.querySelector('span[data-en]');
+    const title = card.querySelector('h3 a[data-en]');
+    if (img && a.image) img.src = a.image;
+    if (tag) { tag.setAttribute('data-en', a.category.toUpperCase()); tag.textContent = a.category.toUpperCase(); }
+    if (title) { title.setAttribute('href', `/${a.category}/${a.slug}`); title.setAttribute('data-en', a.titles.en); title.textContent = a.titles.en || 'Untitled'; }
+  });
+
+  // --- POLITICS section
+  const politics = latestByCategory('politics', 5);
+  if (politics.length) {
+    const mainPol = politics[0];
+    const mImg = document.querySelector('.politics-main-card img');
+    const mTag = document.querySelector('.politics-main-card .content p[data-en]');
+    const mH = document.querySelector('.politics-main-card .content h3[data-en]');
+    if (mImg && mainPol.image) mImg.src = mainPol.image;
+    if (mTag) { mTag.setAttribute('data-en','POLITICS'); mTag.textContent = 'POLITICS'; }
+    if (mH) { mH.setAttribute('data-en', mainPol.titles.en); mH.textContent = mainPol.titles.en || 'Untitled'; }
+
+    const sideCards = document.querySelectorAll('.politics-side-card');
+    politics.slice(1, 5).forEach((a, idx) => {
+      const c = sideCards[idx]; if (!c) return;
+      const img = c.querySelector('img');
+      const tag = c.querySelector('span[data-en]');
+      const h4  = c.querySelector('h4[data-en]');
+      if (img && a.image) img.src = a.image;
+      if (tag) { tag.setAttribute('data-en','POLITICS'); tag.textContent = 'POLITICS'; }
+      if (h4)  { h4.setAttribute('data-en', a.titles.en); h4.textContent = a.titles.en || 'Untitled'; }
+    });
+  }
+
+  // Optional: respect language toggle already on your page
+  if (typeof setLanguage === 'function') {
+    // Re-apply language so data-en / data-so update
+    const active = document.querySelector('.lang-toggle .active')?.id?.includes('so') ? 'so' : 'en';
+    setLanguage(active);
+  }
+})();
+</script>
+
+
+
+
+ 
 </body>
 </html>
