@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/devmaina/Muwaaddin#readme",
   "dependencies": {
+    "@supabase/supabase-js": "^2.56.1",
     "vite": "^7.1.3"
   }
 }
