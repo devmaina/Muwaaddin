@@ -1,3 +1,6 @@
+// types.ts
+
+
 export interface Article {
   id: string;
   created_at: string;

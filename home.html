@@ -1,0 +1,1157 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-en="Muwaaddin Platform" data-so="Goobta Muwaaddin">Muwaaddin Platform</title>
+    <!-- Favicon from CDN -->
+    <link rel="icon" href="https://placeholder.co/32x32">
+    <!-- Poppins Font from Google Fonts (similar to Century Gothic) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons (more reliable than Iconify) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2M6c1aB3r/D6p4vM3N2fQ4oQ7q5Q+Q6G1U5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --primary-bg: #222222;
+            --secondary-bg: #f5f5f5;
+            --primary-text: #fff;
+            --secondary-text: #333;
+            --link-color: #f7a400;
+            --hover-color: #e59400;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--secondary-bg);
+            color: var(--secondary-text);
+        }
+
+        /* General Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            font-size: 0.8em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .top-bar .social-icons a,
+        .top-bar .lang-toggle span {
+            color: var(--primary-text);
+            text-decoration: none;
+            margin-left: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .top-bar .social-icons a:hover,
+        .top-bar .lang-toggle span:hover {
+            color: var(--link-color);
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo a {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary-text);
+            text-decoration: none;
+        }
+        
+        .main-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .main-nav li {
+            margin-right: 25px;
+        }
+
+        .main-nav a {
+            color: var(--primary-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .main-nav a:hover {
+            color: var(--link-color);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            padding: 50px 0;
+        }
+
+        .hero-content {
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-article {
+            flex: 2;
+            position: relative;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .main-article img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            transition: transform 0.3s ease;
+        }
+
+        .main-article:hover img {
+            transform: scale(1.05);
+        }
+
+        .main-article-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+        }
+
+        .main-article-text h1 a {
+            color: var(--primary-text);
+            text-decoration: none;
+            font-size: 2em;
+        }
+
+        .main-article-text p {
+            font-size: 1em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .side-news {
+            flex: 1;
+            display: grid;
+            gap: 15px;
+        }
+        
+        .news-card {
+            display: flex;
+            background-color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .news-card-content {
+            padding: 10px;
+            flex-grow: 1;
+        }
+
+        .news-card-content span {
+            background-color: var(--link-color);
+            color: #fff;
+            padding: 3px 8px;
+            font-size: 0.7em;
+            font-weight: bold;
+            border-radius: 5px;
+            text-transform: uppercase;
+        }
+
+        .news-card-content h3 a {
+            font-size: 1em;
+            margin: 5px 0;
+            color: var(--primary-text);
+            text-decoration: none;
+        }
+
+        /* Opinion Section */
+        .section {
+            padding: 50px 0;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-header h2 {
+            font-size: 2em;
+        }
+
+        .section-header a {
+            color: var(--link-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .opinion-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .opinion-main-card {
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .opinion-main-card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .opinion-main-content {
+            padding: 20px;
+        }
+
+        .opinion-main-content h3 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        .opinion-main-content p {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #666;
+        }
+        
+        .opinion-sub-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            align-content: start; /* Align items to the start of the grid container */
+        }
+        
+        .opinion-sub-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .opinion-sub-card blockquote {
+            font-size: 1.1em;
+            margin: 0;
+            padding: 0;
+            border-left: 3px solid var(--link-color);
+            padding-left: 15px;
+            color: #555;
+            font-style: italic;
+        }
+        
+        .opinion-sub-card .author {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .opinion-sub-card .author img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* Politics Section */
+        .politics-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        
+        .politics-main-card {
+            position: relative;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .politics-main-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .politics-main-card .content {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: #fff;
+        }
+
+        .politics-main-card .content p {
+            font-size: 0.8em;
+            margin: 0;
+        }
+
+        .politics-main-card .content h3 {
+            font-size: 1.8em;
+            margin: 5px 0 0;
+        }
+
+        .politics-side-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            align-content: start;
+        }
+
+        .politics-side-card {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .politics-side-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .politics-side-content {
+            padding: 10px;
+        }
+        
+        .politics-side-content span {
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .politics-side-content h4 {
+            font-size: 1em;
+            margin: 5px 0 0;
+        }
+
+
+        /* About Section */
+        .about-section {
+            padding: 50px 0;
+            background-color: var(--secondary-bg);
+            text-align: center;
+        }
+
+        .about-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .about-section p {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .about-section a.button {
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .about-section a.button:hover {
+            background-color: var(--link-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-bg);
+            color: var(--primary-text);
+            padding: 40px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo {
+            flex-basis: 300px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            height: 50px;
+        }
+
+        .newsletter {
+            flex-basis: 400px;
+            margin-bottom: 20px;
+        }
+
+        .newsletter h4 {
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .newsletter .input-group {
+            display: flex;
+        }
+        
+        .newsletter input {
+            padding: 10px;
+            border: none;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--primary-text);
+            border-radius: 5px 0 0 5px;
+            flex-grow: 1;
+            font-family: inherit;
+        }
+
+        .newsletter button {
+            background-color: var(--link-color);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .newsletter button:hover {
+            background-color: var(--hover-color);
+        }
+        
+        .newsletter button i {
+            color: #fff;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--link-color);
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Mobile Menu and Hamburger Button */
+        .hamburger-menu {
+            display: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--primary-text);
+            padding: 5px;
+            margin-left: 20px;
+        }
+        
+        .mobile-nav {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            right: -100%; /* Start off-screen */
+            width: 70%;
+            height: 100%;
+            background-color: var(--primary-bg);
+            z-index: 1000;
+            transition: right 0.4s ease-in-out;
+            padding: 20px;
+            box-shadow: -5px 0 10px rgba(0, 0, 0, 0.3);
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .mobile-nav.is-active {
+            display: flex;
+            right: 0; /* Slide in */
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            color: var(--primary-text);
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 50px 0 20px; /* Space from the top */
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .mobile-nav li {
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .mobile-nav a {
+            display: block;
+            padding: 10px;
+            width: 100%;
+            text-decoration: none;
+            color: var(--primary-text);
+            font-weight: 500;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-nav .lang-toggle, .mobile-nav .search-icon, .mobile-nav .social-icons {
+            margin: 10px 0;
+            width: 100%;
+            padding-left: 10px;
+        }
+
+        .mobile-nav .lang-toggle span, .mobile-nav .search-icon i {
+            color: var(--primary-text);
+        }
+        
+        .mobile-nav .social-icons a {
+            font-size: 1.5em;
+            margin-right: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .top-bar, .main-nav ul, .search-icon {
+                display: none;
+            }
+            
+            .hamburger-menu {
+                display: block;
+            }
+            
+            .main-nav {
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-links, .social-icons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            /* Responsive for the new sections */
+            .opinion-grid, .politics-grid, .politics-side-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Muwaaddin Platform",
+        "url": "https://www.muwaaddin.com",
+        "description": "A media platform dedicated to addressing Somalia’s political, social, and cultural issues through high-quality articles and dialogue.",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.muwaaddin.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="top-bar">
+                <div class="date-location">
+                    <span data-en="Thursday, August 21, 2025" data-so="Khamiista, Ogosto 21, 2025">Thursday, August 21, 2025</span>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <div class="lang-toggle">
+                    <span id="lang-en" class="active">EN</span> | <span id="lang-so">SO</span>
+                </div>
+            </div>
+            <div class="main-nav">
+                <div class="logo">
+                    <img src="https://placeholder.co/50x50/333333/FFFFFF?text=Logo" alt="Muwaaddin Logo">
+                    <a href="#" data-en="MUWAADDIN" data-so="MUWAADDIN">MUWAADDIN</a>
+                </div>
+                <!-- Desktop Nav -->
+                <ul>
+                    <li><a href="#" data-en="Home" data-so="Guriga">Home</a></li>
+                    <li><a href="#" data-en="Politics" data-so="Siyaasad">Politics</a></li>
+                    <li><a href="#" data-en="Opinion" data-so="Ra'yi">Opinion</a></li>
+                    <li><a href="#" data-en="Culture" data-so="Dhaqan">Culture</a></li>
+                    <li><a href="#" data-en="Multimedia" data-so="Multimedia">Multimedia</a></li>
+                    <li><a href="#" data-en="Interviews" data-so="Wareysiyo">Interviews</a></li>
+                    <li><a href="#" data-en="About" data-so="Ku saabsan">About</a></li>
+                </ul>
+                <div class="search-icon">
+                    <a href="#"><i class="fas fa-search"></i></a>
+                </div>
+                <!-- Hamburger Menu for Mobile -->
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <nav class="mobile-nav" id="mobile-nav">
+        <span class="mobile-nav-close" id="mobile-nav-close">&times;</span>
+        <ul>
+            <li><a href="#" data-en="Home" data-so="Guriga">Home</a></li>
+            <li><a href="#" data-en="Politics" data-so="Siyaasad">Politics</a></li>
+            <li><a href="#" data-en="Opinion" data-so="Ra'yi">Opinion</a></li>
+            <li><a href="#" data-en="Culture" data-so="Dhaqan">Culture</a></li>
+            <li><a href="#" data-en="Multimedia" data-so="Multimedia">Multimedia</a></li>
+            <li><a href="#" data-en="Interviews" data-so="Wareysiyo">Interviews</a></li>
+            <li><a href="#" data-en="About" data-so="Ku saabsan">About</a></li>
+        </ul>
+        <div class="lang-toggle">
+            <span id="lang-en-mobile" class="active">EN</span> | <span id="lang-so-mobile">SO</span>
+        </div>
+        <div class="search-icon">
+            <a href="#"><i class="fas fa-search"></i></a>
+        </div>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-x-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container hero-content">
+            <div class="main-article">
+                <img src="https://placeholder.co/800x600/333333/FFFFFF?text=Politics+Article" alt="Political Article Image">
+                <div class="main-article-text">
+                    <p data-en="POLITICS" data-so="SIYAASAD">POLITICS</p>
+                    <h1><a href="#" data-en="Siad Barre, myth and the spectacle of power" data-so="Siyaad Barre, halyeey iyo muuqaalka awoodda">Siad Barre, myth and the spectacle of power</a></h1>
+                    <p data-en="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." data-so="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+            <div class="side-news">
+                <div class="news-card">
+                    <img src="https://placeholder.co/100x100/333333/FFFFFF?text=Interview" alt="Interview Image">
+                    <div class="news-card-content">
+                        <span data-en="INTERVIEWS" data-so="WAREYSIYO">INTERVIEWS</span>
+                        <h3><a href="#" data-en="Abdirahman Badiyow &quot;I want us to reconcile...&quot;" data-so="Cabdiraxmaan Baadiyow &quot;Waxaan rabaa inaan heshiinno...&quot;">Abdirahman Badiyow "I want us to reconcile..."</a></h3>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <img src="https://placeholder.co/100x100/333333/FFFFFF?text=Fiction" alt="Fiction Image">
+                    <div class="news-card-content">
+                        <span data-en="FICTION" data-so="KHAYAALI">FICTION</span>
+                        <h3><a href="#" data-en="Was I created for suffering?" data-so="Ma waxaan loo abuuray dhib?">Was I created for suffering?</a></h3>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <img src="https://placeholder.co/100x100/333333/FFFFFF?text=Opinion" alt="Opinion Image">
+                    <div class="news-card-content">
+                        <span data-en="OPINION" data-so="RA'YI">OPINION</span>
+                        <h3><a href="#" data-en="How to learn the Somali language" data-so="Sidee loo bartaa luqadda Soomaaliga">How to learn the Somali language</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Politics Section -->
+    <section class="section politics-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-en="Politics" data-so="Siyaasad">Politics</h2>
+                <a href="#" data-en="more >" data-so="dheeraad >">more &gt;</a>
+            </div>
+            <div class="politics-grid">
+                <div class="politics-main-card">
+                    <img src="https://placeholder.co/800x600/333333/FFFFFF?text=Featured+Politics" alt="Featured Politics Article Image">
+                    <div class="content">
+                        <p data-en="POLITICS" data-so="SIYAASAD">POLITICS</p>
+                        <h3 data-en="Understanding Irro's foreign policy" data-so="Fahamka siyaasadda arrimaha dibedda ee Cirro">Understanding Irro's foreign policy</h3>
+                    </div>
+                </div>
+                <div class="politics-side-grid">
+                    <div class="politics-side-card">
+                        <img src="https://placeholder.co/300x150/333333/FFFFFF?text=Politics" alt="Politics Article Image">
+                        <div class="politics-side-content">
+                            <span data-en="POLITICS" data-so="SIYAASAD">POLITICS</span>
+                            <h4 data-en="The enemy of my enemy is my friend" data-so="Cadowga cadowgayga waa saaxiibkay">The enemy of my enemy is my friend</h4>
+                        </div>
+                    </div>
+                    <div class="politics-side-card">
+                        <img src="https://placeholder.co/300x150/333333/FFFFFF?text=Politics" alt="Politics Article Image">
+                        <div class="politics-side-content">
+                            <span data-en="POLITICS" data-so="SIYAASAD">POLITICS</span>
+                            <h4 data-en="The grift tank" data-so="Haanta laaluushka">The grift tank</h4>
+                        </div>
+                    </div>
+                    <div class="politics-side-card">
+                        <img src="https://placeholder.co/300x150/333333/FFFFFF?text=Politics" alt="Politics Article Image">
+                        <div class="politics-side-content">
+                            <span data-en="POLITICS" data-so="SIYAASAD">POLITICS</span>
+                            <h4 data-en="The reopening of a border between Eritrea and Tigray" data-so="Dib u furista xuduudda u dhaxeysa Ereteriya iyo Tigray">The reopening of a border between Eritrea and Tigray</h4>
+                        </div>
+                    </div>
+                    <div class="politics-side-card">
+                        <img src="https://placeholder.co/300x150/333333/FFFFFF?text=Politics" alt="Politics Article Image">
+                        <div class="politics-side-content">
+                            <span data-en="POLITICS" data-so="SIYAASAD">POLITICS</span>
+                            <h4 data-en="A new era for Somali-Kenyan relations" data-so="Xiriir cusub oo u bilowday Soomaaliya iyo Kenya">A new era for Somali-Kenyan relations</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opinion Section -->
+    <section class="section opinion-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-en="Opinion" data-so="Ra'yi">Opinion</h2>
+                <a href="#" data-en="more >" data-so="dheeraad >">more &gt;</a>
+            </div>
+            <div class="opinion-grid">
+                <div class="opinion-main-card">
+                    <img src="https://placeholder.co/800x600/333333/FFFFFF?text=Opinion+Article" alt="Main Opinion Article Image">
+                    <div class="opinion-main-content">
+                        <h3 data-en="Mogadishu: a city that won't love us back" data-so="Muqdisho: magaalo aan noo jeclaan doonin">Mogadishu: a city that won't love us back</h3>
+                        <p data-en="Amid loss, hope, war, and the fragile freedom of choice, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." data-so="Amid loss, hope, war, and the fragile freedom of choice, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.">Amid loss, hope, war, and the fragile freedom of choice, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+                <div class="opinion-sub-cards">
+                    <div class="opinion-sub-card">
+                        <div class="author">
+                            <img src="https://placeholder.co/40x40" alt="Author Image">
+                            <span>MAHAD WELI</span>
+                        </div>
+                        <blockquote data-en="Why we need to collect and archive Somali history." data-so="Maxaynu u baahannahay inaan ururinno oo kaydinno taariikhda Soomaalida.">Why we need to collect and archive Somali history.</blockquote>
+                    </div>
+                    <div class="opinion-sub-card">
+                        <div class="author">
+                            <img src="https://placeholder.co/40x40" alt="Author Image">
+                            <span>SARA ELKHATTIB</span>
+                        </div>
+                        <blockquote data-en="Rebuilding Afro-Palestinian solidarity." data-so="Dib u dhiska wadajirka Afrikaan-Falastiiniyiinta.">Rebuilding Afro-Palestinian solidarity.</blockquote>
+                    </div>
+                    <div class="opinion-sub-card">
+                        <div class="author">
+                            <img src="https://placeholder.co/40x40" alt="Author Image">
+                            <span>MUBARAK ALIYU</span>
+                        </div>
+                        <blockquote data-en="Sudan has exposed the failings of the AU's ability to end wars." data-so="Suudaan waxay soo bandhigtay guul darrooyinka awoodda Midowga Afrika ee dhameynta dagaallada.">Sudan has exposed the failings of the AU's ability to end wars.</blockquote>
+                    </div>
+                    <div class="opinion-sub-card">
+                        <div class="author">
+                            <img src="https://placeholder.co/40x40" alt="Author Image">
+                            <span>SUREN PILLAY</span>
+                        </div>
+                        <blockquote data-en="African solidarity with Gaza doesn't downplay African conflicts." data-so="Wadajirka Afrika ee Gaasa ma yareeyo khilaafaadka Afrika.">African solidarity with Gaza doesn't downplay African conflicts.</blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ... keep everything you already have above ... -->
+
+    <!-- Culture Section -->
+    <section class="section culture-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-en="Culture" data-so="Dhaqan">Culture</h2>
+                <a href="#" data-en="more >" data-so="dheeraad >">more &gt;</a>
+            </div>
+            <div class="opinion-grid">
+                <div class="opinion-main-card">
+                    <img src="https://placeholder.co/800x600/333333/FFFFFF?text=Culture+Article" alt="Main Culture Article">
+                    <div class="opinion-main-content">
+                        <h3 data-en="Somali oral traditions in a digital age" data-so="Hidaha afka ee Soomaalida xilligii dijitaalka">Somali oral traditions in a digital age</h3>
+                        <p data-en="Exploring how ancient Somali poetry, storytelling, and music survive through digital platforms..." data-so="Baadhitaan ku saabsan sida suugaanta, sheekooyinka iyo muusikada Soomaalida ee qadiimiga ah ay ugu sii jiraan baraha dijitaalka...">Exploring how ancient Somali poetry, storytelling, and music survive through digital platforms...</p>
+                    </div>
+                </div>
+                <div class="opinion-sub-cards">
+                    <div class="opinion-sub-card">
+                        <div class="author">
+                            <img src="https://placeholder.co/40x40" alt="Author">
+                            <span>FARAH AHMED</span>
+                        </div>
+                        <blockquote data-en="Reviving Somali folklore for the new generation." data-so="Soo nooleynta khuraafaadka Soomaalida jiilka cusub.">Reviving Somali folklore for the new generation.</blockquote>
+                    </div>
+                    <div class="opinion-sub-card">
+                        <div class="author">
+                            <img src="https://placeholder.co/40x40" alt="Author">
+                            <span>LAYLA MOHAMED</span>
+                        </div>
+                        <blockquote data-en="Fashion and identity in Mogadishu’s streets." data-so="Dharka iyo aqoonsiga waddooyinka Muqdisho.">Fashion and identity in Mogadishu’s streets.</blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Multimedia Section -->
+    <section class="section multimedia-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-en="Multimedia" data-so="Multimedia">Multimedia</h2>
+                <a href="#" data-en="more >" data-so="dheeraad >">more &gt;</a>
+            </div>
+            <div class="politics-grid">
+                <div class="politics-main-card">
+                    <img src="https://placeholder.co/800x600/333333/FFFFFF?text=Multimedia" alt="Main Multimedia">
+                    <div class="content">
+                        <p data-en="VIDEO" data-so="MUUQAAL">VIDEO</p>
+                        <h3 data-en="Documenting Mogadishu’s skyline transformation" data-so="Dukumeentiga isbeddelka muuqaalka Muqdisho">Documenting Mogadishu’s skyline transformation</h3>
+                    </div>
+                </div>
+                <div class="politics-side-grid">
+                    <div class="politics-side-card">
+                        <img src="https://placeholder.co/300x150/333333/FFFFFF?text=Podcast" alt="Multimedia Card">
+                        <div class="politics-side-content">
+                            <span data-en="PODCAST" data-so="PODKAAS">PODCAST</span>
+                            <h4 data-en="Youth voices on Somali music" data-so="Codadka dhalinyarada ee muusikada Soomaalida">Youth voices on Somali music</h4>
+                        </div>
+                    </div>
+                    <div class="politics-side-card">
+                        <img src="https://placeholder.co/300x150/333333/FFFFFF?text=Video" alt="Multimedia Card">
+                        <div class="politics-side-content">
+                            <span data-en="VIDEO" data-so="MUUQAAL">VIDEO</span>
+                            <h4 data-en="Art in exile: Somali artists abroad" data-so="Fanka qurbaha: fanaaniinta Soomaaliyeed ee dibadda">Art in exile: Somali artists abroad</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interviews Section -->
+    <section class="section interviews-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-en="Interviews" data-so="Wareysiyo">Interviews</h2>
+                <a href="#" data-en="more >" data-so="dheeraad >">more &gt;</a>
+            </div>
+            <div class="opinion-grid">
+                <div class="opinion-main-card">
+                    <img src="https://placeholder.co/800x600/333333/FFFFFF?text=Interview" alt="Main Interview">
+                    <div class="opinion-main-content">
+                        <h3 data-en="An exclusive with Somali women in politics" data-so="Wareysi gaar ah oo lala yeeshay haweenka siyaasadda Soomaaliyeed">An exclusive with Somali women in politics</h3>
+                        <p data-en="Three Somali women leaders share their stories about navigating power, identity, and resilience..." data-so="Saddex haween Soomaaliyeed ayaa ka sheekeynaya khibradahooda siyaasadeed, aqoonsi iyo adkaysi...">Three Somali women leaders share their stories about navigating power, identity, and resilience...</p>
+                    </div>
+                </div>
+                <div class="opinion-sub-cards">
+                    <div class="opinion-sub-card">
+                        <div class="author">
+                            <img src="https://placeholder.co/40x40" alt="Author">
+                            <span>HASSAN ALI</span>
+                        </div>
+                        <blockquote data-en="Somali entrepreneurs redefining success." data-so="Ganacsatada Soomaaliyeed oo dib u qeexaya guusha.">Somali entrepreneurs redefining success.</blockquote>
+                    </div>
+                    <div class="opinion-sub-card">
+                        <div class="author">
+                            <img src="https://placeholder.co/40x40" alt="Author">
+                            <span>AMINA WARSAME</span>
+                        </div>
+                        <blockquote data-en="The role of Somali youth in peacebuilding." data-so="Doorka dhalinyarada Soomaaliyeed ee dhismaha nabadda.">The role of Somali youth in peacebuilding.</blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- ... keep About + Footer as is ... -->
+
+
+    <!-- About Section - using your content brief -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <h2 data-en="About Muwaaddin Platform" data-so="Ku saabsan Goobta Muwaaddin">About Muwaaddin Platform</h2>
+            <p data-en="Muwaaddin Platform is a media website dedicated to addressing Somalia’s political, social, and cultural issues. It will feature high-quality articles that raise public awareness and foster critical dialogue. The platform aims to be inclusive, providing space for all Somalis by publishing independent perspectives alongside political, social, and socio-economic analyses. Muwaaddin seeks to complement Somali written journalism while maintaining neutrality, avoiding bias toward any group or interest." data-so="Goobta Muwaaddin waa shabakad warbaahineed oo u heellan wax ka qabashada arrimaha siyaasadda, bulshada, iyo dhaqanka Soomaaliya. Waxay soo bandhigi doontaa maqaallo tayo leh oo kor u qaadaya wacyigelinta bulshada iyo dhiirigelinta wada-hadal muhiim ah. Goobta waxaa looga golleeyahay inay noqoto mid loo dhanyahay, oo ay siiso fursad dhammaan Soomaalida iyadoo daabacaysa aragtiyo madax-bannaan oo ay la socdaan falanqayno siyaasadeed, bulsho, iyo dhaqaale-bulsho. Muwaaddin waxay raadinaysaa inay buuxiso waxyaabaha ka maqan saxaafadda qoran ee Soomaalida iyadoo ilaalinaysa dhexdhexaadnimo, kana fogaanaysa eexda koox ama dan gaar ah.">
+                Muwaaddin Platform is a media website dedicated to addressing Somalia’s political, social, and cultural issues. It will feature high-quality articles that raise public awareness and foster critical dialogue. The platform aims to be inclusive, providing space for all Somalis by publishing independent perspectives alongside political, social, and socio-economic analyses. Muwaaddin seeks to complement Somali written journalism while maintaining neutrality, avoiding bias toward any group or interest.
+            </p>
+            <a href="#" class="button" data-en="Read More About Us" data-so="Wax badan naga ogow">Read More About Us</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://placeholder.co/50x50/333333/FFFFFF?text=Logo" alt="Muwaaddin Logo">
+                    <span data-en="MUWAADDIN" data-so="MUWAADDIN">MUWAADDIN</span>
+                    <div class="social-icons">
+                         <a href="#"><i class="fab fa-facebook-f"></i></a>
+                         <a href="#"><i class="fab fa-x-twitter"></i></a>
+                         <a href="#"><i class="fab fa-instagram"></i></a>
+                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="newsletter">
+                    <h4 data-en="Subscribe to our newsletter" data-so="Is-diiwaan geli warqadeena">Subscribe to our newsletter</h4>
+                    <div class="input-group">
+                        <input type="email" placeholder="Enter your email here...">
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <a href="#" data-en="Home" data-so="Guriga">Home</a>
+                    <a href="#" data-en="Politics" data-so="Siyaasad">Politics</a>
+                    <a href="#" data-en="Opinion" data-so="Ra'yi">Opinion</a>
+                    <a href="#" data-en="Culture" data-so="Dhaqan">Culture</a>
+                    <a href="#" data-en="Multimedia" data-so="Multimedia">Multimedia</a>
+                    <a href="#" data-en="Interviews" data-so="Wareysiyo">Interviews</a>
+                </div>
+                <div class="footer-links">
+                    <a href="#" data-en="About" data-so="Ku saabsan">About</a>
+                    <a href="#" data-en="Contact" data-so="Xiriir">Contact</a>
+                    <a href="#" data-en="Privacy Policy" data-so="Xeerarka Gaarka ah">Privacy Policy</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <span data-en="&copy; 2025 Muwaaddin, All Rights Reserved." data-so="&copy; 2025 Muwaaddin, Dhammaan xuquuqda waa la dhowray.">&copy; 2025 Muwaaddin, All Rights Reserved.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for language conversion and menu functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const langEN = document.getElementById('lang-en');
+            const langSO = document.getElementById('lang-so');
+            const langENMobile = document.getElementById('lang-en-mobile');
+            const langSOMobile = document.getElementById('lang-so-mobile');
+            const hamburgerMenu = document.getElementById('hamburger-menu');
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileNavClose = document.getElementById('mobile-nav-close');
+
+            function setLanguage(lang) {
+                // Set the active class on the selected language toggle
+                langEN.classList.remove('active');
+                langSO.classList.remove('active');
+                langENMobile.classList.remove('active');
+                langSOMobile.classList.remove('active');
+                
+                if (lang === 'en') {
+                    langEN.classList.add('active');
+                    langENMobile.classList.add('active');
+                } else {
+                    langSO.classList.add('active');
+                    langSOMobile.classList.add('active');
+                }
+                
+                // Update the text content of all elements with data attributes
+                document.querySelectorAll('[data-en]').forEach(el => {
+                    if (lang === 'so') {
+                        el.textContent = el.getAttribute('data-so');
+                    } else {
+                        el.textContent = el.getAttribute('data-en');
+                    }
+                });
+            }
+
+            // Add event listeners for language switching
+            langEN.addEventListener('click', () => setLanguage('en'));
+            langSO.addEventListener('click', () => setLanguage('so'));
+            langENMobile.addEventListener('click', () => setLanguage('en'));
+            langSOMobile.addEventListener('click', () => setLanguage('so'));
+
+            // Hamburger menu functionality
+            hamburgerMenu.addEventListener('click', () => {
+                mobileNav.classList.add('is-active');
+            });
+
+            mobileNavClose.addEventListener('click', () => {
+                mobileNav.classList.remove('is-active');
+            });
+
+            // Set default language on page load
+            setLanguage('en');
+
+            // Placeholder for backend script
+            function sendToBackend(data) {
+                console.log('Sending data to backend:', data);
+                // Example:
+                // fetch('/api/submit', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(data)
+                // })
+                // .then(response => response.json())
+                // .then(result => console.log('Backend response:', result))
+                // .catch(error => console.error('Error:', error));
+            }
+        });
+    </script>
+
+<script>
+(async function () {
+  const res = await fetch('/data/articles.json');
+  const payload = await res.json().catch(()=>({articles:[]}));
+  const articles = Array.isArray(payload) ? payload : (payload.articles||[]);
+  const published = articles.filter(a=>a.status==='published');
+
+  // Helper
+  const latestByCategory = (cat, n=1) =>
+    published.filter(a=>a.category===cat)
+             .sort((a,b)=>new Date(b.updatedAt)-new Date(a.updatedAt))
+             .slice(0,n);
+
+  // --- HERO (main article)
+  const main = published.sort((a,b)=>new Date(b.updatedAt)-new Date(a.updatedAt))[0];
+  if (main) {
+    const heroImg = document.querySelector('.main-article img');
+    const heroCat = document.querySelector('.main-article-text p[data-en]');
+    const heroTitle = document.querySelector('.main-article-text h1 a[data-en]');
+    const heroDeck = document.querySelector('.main-article-text p[data-en]:not(:first-child)');
+
+    if (heroImg && main.image) heroImg.src = main.image;
+    if (heroCat) { heroCat.setAttribute('data-en', main.category.toUpperCase()); heroCat.textContent = main.category.toUpperCase(); }
+    if (heroTitle) { heroTitle.setAttribute('href', `/${main.category}/${main.slug}`); heroTitle.setAttribute('data-en', main.titles.en); heroTitle.textContent = main.titles.en || 'Untitled'; }
+    if (heroDeck) { heroDeck.setAttribute('data-en', (main.bodies.en||'').slice(0,160)+'…'); heroDeck.textContent = (main.bodies.en||'').slice(0,160)+'…'; }
+  }
+
+  // --- SIDE NEWS (3 latest regardless of category)
+  const side = document.querySelectorAll('.side-news .news-card');
+  const top3 = published.slice(0,3);
+  side.forEach((card, i) => {
+    const a = top3[i]; if (!a) return;
+    const img = card.querySelector('img');
+    const tag = card.querySelector('span[data-en]');
+    const title = card.querySelector('h3 a[data-en]');
+    if (img && a.image) img.src = a.image;
+    if (tag) { tag.setAttribute('data-en', a.category.toUpperCase()); tag.textContent = a.category.toUpperCase(); }
+    if (title) { title.setAttribute('href', `/${a.category}/${a.slug}`); title.setAttribute('data-en', a.titles.en); title.textContent = a.titles.en || 'Untitled'; }
+  });
+
+  // --- POLITICS section
+  const politics = latestByCategory('politics', 5);
+  if (politics.length) {
+    const mainPol = politics[0];
+    const mImg = document.querySelector('.politics-main-card img');
+    const mTag = document.querySelector('.politics-main-card .content p[data-en]');
+    const mH = document.querySelector('.politics-main-card .content h3[data-en]');
+    if (mImg && mainPol.image) mImg.src = mainPol.image;
+    if (mTag) { mTag.setAttribute('data-en','POLITICS'); mTag.textContent = 'POLITICS'; }
+    if (mH) { mH.setAttribute('data-en', mainPol.titles.en); mH.textContent = mainPol.titles.en || 'Untitled'; }
+
+    const sideCards = document.querySelectorAll('.politics-side-card');
+    politics.slice(1, 5).forEach((a, idx) => {
+      const c = sideCards[idx]; if (!c) return;
+      const img = c.querySelector('img');
+      const tag = c.querySelector('span[data-en]');
+      const h4  = c.querySelector('h4[data-en]');
+      if (img && a.image) img.src = a.image;
+      if (tag) { tag.setAttribute('data-en','POLITICS'); tag.textContent = 'POLITICS'; }
+      if (h4)  { h4.setAttribute('data-en', a.titles.en); h4.textContent = a.titles.en || 'Untitled'; }
+    });
+  }
+
+  // Optional: respect language toggle already on your page
+  if (typeof setLanguage === 'function') {
+    // Re-apply language so data-en / data-so update
+    const active = document.querySelector('.lang-toggle .active')?.id?.includes('so') ? 'so' : 'en';
+    setLanguage(active);
+  }
+})();
+</script>
+
+
+
+
+ 
+</body>
+</html>
