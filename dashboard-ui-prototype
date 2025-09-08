@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muwaaddin — Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f172a;--panel:#111827;--muted:#1f2937;--text:#e5e7eb;--sub:#9ca3af;--brand:#f7a400;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--chip:#334155
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:'Poppins',system-ui,-apple-system,segoe ui,Roboto,Ubuntu,"Helvetica Neue",sans-serif}
+    a{color:var(--brand)}
+    .wrap{display:grid;grid-template-columns:260px 1fr;min-height:100dvh}
+    .side{background:var(--panel);border-right:1px solid #111;padding:20px;position:sticky;top:0;height:100dvh}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+    .brand img{width:36px;height:36px;border-radius:10px}
+    nav{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+    nav button{all:unset;display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;background:transparent;cursor:pointer;color:var(--text)}
+    nav button.active,nav button:hover{background:var(--chip)}
+    .main{padding:24px 28px}
+    .bar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}
+    .bar .left{display:flex;align-items:center;gap:10px}
+    .chip{background:var(--chip);padding:6px 10px;border-radius:999px;font-size:12px;color:var(--sub)}
+    .card{background:var(--panel);border:1px solid #111;border-radius:16px;padding:16px}
+    .grid{display:grid;gap:16px}
+    .grid.cols-2{grid-template-columns:1fr 1fr}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    label{font-size:12px;color:var(--sub);display:block;margin-bottom:6px}
+    input[type="text"], textarea, select{width:100%;background:#0b1220;border:1px solid #0b1220;color:var(--text);border-radius:12px;padding:12px;font-family:inherit}
+    textarea{min-height:120px;resize:vertical}
+    input[readonly]{opacity:.8}
+    .row{display:flex;gap:12px;align-items:center}
+    .row> *{flex:1}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{all:unset;cursor:pointer;background:var(--brand);color:#111;font-weight:700;padding:10px 14px;border-radius:12px}
+    .btn.ghost{background:transparent;border:1px solid #222;color:var(--text)}
+    .btn.ok{background:var(--ok);color:#03140a}
+    .btn.warn{background:var(--warn);color:#1a1203}
+    .btn.err{background:var(--err)}
+    .notice{font-size:12px;color:var(--sub)}
+    .preview{background:#0b1220;border:1px dashed #2b3547;border-radius:16px;padding:16px}
+    .preview .lang-tabs{display:flex;gap:8px;margin-bottom:10px}
+    .tab{padding:6px 10px;border-radius:8px;background:#111;color:var(--sub);cursor:pointer}
+    .tab.active{background:var(--brand);color:#111}
+    .img-drop{border:2px dashed #2b3547;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;justify-content:center;text-align:center;min-height:120px}
+    .img-drop.drag{border-color:var(--brand)}
+    .img-prev{max-height:160px;border-radius:12px;display:block;margin:8px auto}
+    table{width:100%;border-collapse:collapse}
+    th,td{border-bottom:1px solid #1b2230;padding:10px;text-align:left;font-size:14px}
+    th{color:var(--sub);font-weight:500}
+    .status{padding:4px 8px;border-radius:999px;font-size:12px}
+    .status.published{background:#022c22;color:#34d399}
+    .status.draft{background:#2a1a00;color:#fbbf24}
+    .right-tools{display:flex;align-items:center;gap:8px}
+    .switch{position:relative;display:inline-block;width:42px;height:24px}
+    .switch input{opacity:0;width:0;height:0}
+    .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#111;transition:.2s;border-radius:999px;border:1px solid #222}
+    .slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:2px;background:white;transition:.2s;border-radius:50%}
+    input:checked + .slider{background:var(--brand)}
+    input:checked + .slider:before{transform:translateX(18px)}
+    .muted{color:var(--sub)}
+    .hidden{display:none}
+    @media (max-width: 1024px){
+      .wrap{grid-template-columns:1fr}
+      .side{position:static;height:auto}
+      .grid.cols-2,.grid.cols-3{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <aside class="side">
+      <div class="brand">
+        <img src="https://placeholder.co/72x72/333333/FFFFFF?text=M" alt="Muwaaddin" />
+        <div>
+          <div>MUWAADDIN</div>
+          <small class="muted">Admin Dashboard</small>
+        </div>
+      </div>
+      <nav>
+        <button class="active" data-view="create">✍️ Create Article</button>
+        <button data-view="list">📚 Articles</button>
+        <button data-view="settings">⚙️ Settings</button>
+        <button id="exportBtn">⬇️ Export JSON</button>
+        <label class="btn ghost" style="text-align:center;cursor:pointer;">⬆️ Import JSON
+          <input id="importInput" type="file" accept="application/json" class="hidden" />
+        </label>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="bar">
+        <div class="left">
+          <h2 style="margin:0">Create / Edit Article</h2>
+          <span class="chip" id="autosaveState">autosave: idle</span>
+        </div>
+        <div class="right-tools">
+          <span class="muted">Published</span>
+          <label class="switch">
+            <input type="checkbox" id="statusToggle"/>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <section id="view-create" class="grid cols-2">
+        <div class="card">
+          <div class="grid cols-2">
+            <div>
+              <label>Category</label>
+              <select id="category">
+                <option value="politics">Politics</option>
+                <option value="opinion">Opinion</option>
+                <option value="culture">Culture</option>
+                <option value="multimedia">Multimedia</option>
+                <option value="interviews">Interviews</option>
+                <option value="news">News</option>
+              </select>
+            </div>
+            <div>
+              <label>Author (auto)</label>
+              <input type="text" id="author" readonly placeholder="Set in Settings"/>
+            </div>
+            <div>
+              <label>Slug (auto)</label>
+              <input type="text" id="slug" readonly />
+            </div>
+            <div>
+              <label>Hero/Thumbnail Image</label>
+              <div id="imgDrop" class="img-drop">
+                <div>
+                  <div>Drop image here or <u>click to upload</u></div>
+                  <small class="muted">JPG/PNG/WebP up to ~2MB</small>
+                </div>
+              </div>
+              <input id="imageInput" type="file" accept="image/*" class="hidden" />
+              <img id="imgPreview" class="img-prev hidden" alt="Preview" />
+            </div>
+          </div>
+
+          <div class="grid cols-3" style="margin-top:12px">
+            <div>
+              <label>Title — English</label>
+              <input type="text" id="title_en" placeholder="Article title in English"/>
+            </div>
+            <div>
+              <label>Title — Somali</label>
+              <input type="text" id="title_so" placeholder="Ciwaanka maqaalka af-Soomaali"/>
+            </div>
+            <div>
+              <label>Title — Arabic</label>
+              <input dir="rtl" type="text" id="title_ar" placeholder="عنوان المقال بالعربية"/>
+            </div>
+          </div>
+
+          <div class="grid cols-3" style="margin-top:12px">
+            <div>
+              <label>Body — English</label>
+              <textarea id="body_en" placeholder="Article body in English..."></textarea>
+            </div>
+            <div>
+              <label>Body — Somali</label>
+              <textarea id="body_so" placeholder="Qoraalka maqaalka af-Soomaali..."></textarea>
+            </div>
+            <div>
+              <label>Body — Arabic</label>
+              <textarea dir="rtl" id="body_ar" placeholder="محتوى المقال بالعربية..."></textarea>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:12px">
+            <div>
+              <label>Tags (comma separated)</label>
+              <input type="text" id="tags" placeholder="diaspora, policy, elections"/>
+            </div>
+            <div>
+              <label>Reading time (mins)</label>
+              <input type="text" id="readtime" placeholder="auto"/>
+            </div>
+          </div>
+
+          <div class="actions" style="margin-top:14px">
+            <button class="btn ok" id="publishBtn">Publish</button>
+            <button class="btn warn" id="draftBtn">Save Draft</button>
+            <button class="btn ghost" id="resetBtn">Reset Form</button>
+            <span class="notice" id="statusMsg"></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top:0">Preview</h3>
+          <div class="preview" id="preview">
+            <div class="lang-tabs">
+              <button class="tab active" data-lang="en">EN</button>
+              <button class="tab" data-lang="so">SO</button>
+              <button class="tab" data-lang="ar">AR</button>
+            </div>
+            <img id="p_img" class="img-prev hidden" alt="preview image"/>
+            <div style="opacity:.8" class="muted" id="p_category">POLITICS</div>
+            <h2 id="p_title">—</h2>
+            <p id="p_body" style="line-height:1.6">Start typing to see live preview…</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-list" class="hidden">
+        <div class="card">
+          <div class="row" style="margin-bottom:8px">
+            <input id="search" type="text" placeholder="Search by title, slug or author"/>
+            <select id="filterCat">
+              <option value="">All categories</option>
+              <option value="politics">Politics</option>
+              <option value="opinion">Opinion</option>
+              <option value="culture">Culture</option>
+              <option value="multimedia">Multimedia</option>
+              <option value="interviews">Interviews</option>
+              <option value="news">News</option>
+            </select>
+            <select id="filterStatus">
+              <option value="">All status</option>
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Title (EN)</th>
+                  <th>Category</th>
+                  <th>Author</th>
+                  <th>Status</th>
+                  <th>Updated</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-settings" class="hidden">
+        <div class="card grid cols-2">
+          <div>
+            <h3 style="margin-top:0">Author Profile</h3>
+            <label>Display name</label>
+            <input id="setAuthor" type="text" placeholder="e.g. Mahad Weli"/>
+            <label style="margin-top:10px">Email (optional, not public)</label>
+            <input id="setEmail" type="text" placeholder="author@example.com"/>
+            <div class="actions" style="margin-top:10px">
+              <button class="btn ok" id="saveAuthor">Save</button>
+              <span class="notice">Used to auto-fill the Author field.</span>
+            </div>
+          </div>
+          <div>
+            <h3 style="margin-top:0">Data</h3>
+            <div class="actions">
+              <button class="btn err" id="wipeAll">Wipe All Local Data</button>
+              <span class="notice">This clears localStorage for articles & settings.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+<script>
+// ——— Lightweight CMS in the browser (localStorage + export/import JSON)
+const LS_KEY = 'muwaaddin_articles_v1';
+const LS_SETTINGS = 'muwaaddin_settings_v1';
+
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+const state = {
+  currentId: null,
+  lang: 'en',
+  autosaveTimer: null
+};
+
+function slugify(s){
+  return s.toString().trim().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9\s-]/g,'')
+    .replace(/\s+/g,'-')
+    .replace(/-+/g,'-')
+    .replace(/^-|-$/g,'');
+}
+
+function readArticles(){
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch{ return []; }
+}
+function writeArticles(arr){ localStorage.setItem(LS_KEY, JSON.stringify(arr)); }
+function readSettings(){ try { return JSON.parse(localStorage.getItem(LS_SETTINGS)) || {}; } catch { return {}; } }
+function writeSettings(obj){ localStorage.setItem(LS_SETTINGS, JSON.stringify(obj)); }
+
+function uid(){ return Math.random().toString(36).slice(2) + Date.now().toString(36); }
+function nowISO(){ return new Date().toISOString(); }
+
+// —— UI wiring
+const views = {
+  create: $('#view-create'),
+  list: $('#view-list'),
+  settings: $('#view-settings')
+};
+
+$$('nav button[data-view]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    $$('.side nav button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const v = btn.dataset.view;
+    Object.entries(views).forEach(([k,el])=>{
+      el.classList.toggle('hidden', k!==v);
+    });
+    if(v==='list') renderTable();
+  })
+});
+
+// Settings init
+(function initSettings(){
+  const s = readSettings();
+  if(s.author){ $('#author').value = s.author; $('#setAuthor').value = s.author; }
+  if(s.email){ $('#setEmail').value = s.email; }
+})();
+
+$('#saveAuthor').addEventListener('click', ()=>{
+  const s = readSettings();
+  s.author = $('#setAuthor').value.trim();
+  s.email = $('#setEmail').value.trim();
+  writeSettings(s);
+  $('#author').value = s.author || '';
+  toast('Author profile saved');
+});
+
+$('#wipeAll').addEventListener('click', ()=>{
+  if(confirm('This will erase ALL saved articles & settings on this browser. Continue?')){
+    localStorage.removeItem(LS_KEY);
+    localStorage.removeItem(LS_SETTINGS);
+    renderTable();
+    toast('Local data cleared');
+  }
+});
+
+// Image upload/drag
+const imgDrop = $('#imgDrop');
+const imgInput = $('#imageInput');
+const imgPrev = $('#imgPreview');
+
+['dragenter','dragover'].forEach(ev=>imgDrop.addEventListener(ev, e=>{ e.preventDefault(); imgDrop.classList.add('drag'); }));
+['dragleave','drop'].forEach(ev=>imgDrop.addEventListener(ev, e=>{ e.preventDefault(); imgDrop.classList.remove('drag'); }));
+imgDrop.addEventListener('drop', e=>{
+  const f = e.dataTransfer.files?.[0]; if(f) loadImageFile(f);
+});
+imgDrop.addEventListener('click', ()=> imgInput.click());
+imgInput.addEventListener('change', e=>{ const f = e.target.files?.[0]; if(f) loadImageFile(f); });
+
+function loadImageFile(file){
+  const ok = /image\/(png|jpeg|webp|gif)/i.test(file.type);
+  if(!ok) return toast('Please upload an image file');
+  const reader = new FileReader();
+  reader.onload = () => {
+    imgPrev.src = reader.result;
+    imgPrev.classList.remove('hidden');
+    $('#p_img').src = reader.result; $('#p_img').classList.remove('hidden');
+  }
+  reader.readAsDataURL(file);
+}
+
+// Form references
+const fields = {
+  category: $('#category'),
+  author: $('#author'),
+  slug: $('#slug'),
+  title_en: $('#title_en'),
+  title_so: $('#title_so'),
+  title_ar: $('#title_ar'),
+  body_en: $('#body_en'),
+  body_so: $('#body_so'),
+  body_ar: $('#body_ar'),
+  tags: $('#tags'),
+  readtime: $('#readtime'),
+  statusToggle: $('#statusToggle'),
+};
+
+// Live preview & auto-slug
+['title_en','title_so','title_ar','body_en','body_so','body_ar'].forEach(k=>{
+  fields[k].addEventListener('input', ()=>{
+    if(k==='title_en' && !state.currentId){ fields.slug.value = slugify(fields.title_en.value).slice(0,96); }
+    updatePreview();
+    scheduleAutosave();
+  });
+});
+fields.category.addEventListener('change', ()=>{ updatePreview(); scheduleAutosave(); });
+fields.statusToggle.addEventListener('change', scheduleAutosave);
+
+function updatePreview(){
+  const lang = state.lang;
+  const titleMap = { en: fields.title_en.value, so: fields.title_so.value, ar: fields.title_ar.value };
+  const bodyMap  = { en: fields.body_en.value,  so: fields.body_so.value,  ar: fields.body_ar.value  };
+  const cat = fields.category.value.toUpperCase();
+  $('#p_category').textContent = cat;
+  $('#p_title').textContent = titleMap[lang] || '—';
+  const pBody = bodyMap[lang] || '';
+  $('#p_body').textContent = pBody.length>400 ? pBody.slice(0,400)+"…" : pBody;
+}
+
+// Preview tabs
+$$('.tab').forEach(t=>t.addEventListener('click', ()=>{
+  $$('.tab').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  state.lang = t.dataset.lang;
+  updatePreview();
+}));
+
+function scheduleAutosave(){
+  $('#autosaveState').textContent = 'autosave: pending…';
+  clearTimeout(state.autosaveTimer);
+  state.autosaveTimer = setTimeout(()=>{ saveDraft(true); }, 800);
+}
+
+// Compose article object from form
+function collectArticle(status){
+  const settings = readSettings();
+  const img = imgPrev?.src?.startsWith('data:') ? imgPrev.src : '';
+  const readtime = fields.readtime.value.trim() || estimateReadTime(fields.body_en.value);
+  return {
+    id: state.currentId || uid(),
+    category: fields.category.value,
+    image: img, // dataURL
+    author: settings.author || '',
+    titles: { en: fields.title_en.value.trim(), so: fields.title_so.value.trim(), ar: fields.title_ar.value.trim() },
+    bodies:  { en: fields.body_en.value.trim(),  so: fields.body_so.value.trim(),  ar: fields.body_ar.value.trim()  },
+    tags: fields.tags.value.split(',').map(s=>s.trim()).filter(Boolean),
+    slug: fields.slug.value || slugify(fields.title_en.value).slice(0,96),
+    status: status || (fields.statusToggle.checked ? 'published':'draft'),
+    createdAt: state.currentId ? findById(state.currentId)?.createdAt : nowISO(),
+    updatedAt: nowISO(),
+    readMinutes: Number(readtime) || parseInt(readtime) || estimateReadTime(fields.body_en.value)
+  };
+}
+
+function estimateReadTime(text){
+  const words = (text||'').trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words/200));
+}
+
+function findById(id){ return readArticles().find(a=>a.id===id); }
+
+// Save draft / publish
+$('#draftBtn').addEventListener('click', ()=> saveDraft(false));
+$('#publishBtn').addEventListener('click', ()=> publish());
+$('#resetBtn').addEventListener('click', resetForm);
+
+function saveDraft(silent){
+  const a = collectArticle('draft');
+  upsertArticle(a);
+  if(!silent){ toast('Draft saved'); }
+  $('#autosaveState').textContent = 'autosave: saved';
+  renderTable();
+}
+
+function publish(){
+  if(!fields.title_en.value.trim()){ return toast('Title (EN) is required to publish'); }
+  const a = collectArticle('published');
+  a.status = 'published';
+  fields.statusToggle.checked = true;
+  upsertArticle(a);
+  toast('Article published');
+  renderTable();
+}
+
+function upsertArticle(article){
+  const arr = readArticles();
+  const i = arr.findIndex(x=>x.id===article.id);
+  if(i>-1){ arr[i]=article; } else { arr.unshift(article); }
+  writeArticles(arr);
+  state.currentId = article.id;
+}
+
+function resetForm(){
+  state.currentId = null;
+  imgPrev.src=''; imgPrev.classList.add('hidden');
+  Object.values(fields).forEach(el=>{ if(el.tagName==='INPUT'||el.tagName==='TEXTAREA') el.value=''; });
+  fields.category.value='politics';
+  fields.statusToggle.checked=false;
+  $('#p_img').classList.add('hidden');
+  updatePreview();
+}
+
+// Table rendering
+function renderTable(){
+  const q = $('#search').value?.toLowerCase()||'';
+  const fc = $('#filterCat').value; const fs = $('#filterStatus').value;
+  const rows = $('#rows'); rows.innerHTML = '';
+  readArticles()
+    .filter(a=>!q ||
+      a.slug.toLowerCase().includes(q) ||
+      a.author.toLowerCase().includes(q) ||
+      (a.titles.en||'').toLowerCase().includes(q))
+    .filter(a=>!fc || a.category===fc)
+    .filter(a=>!fs || a.status===fs)
+    .forEach(a=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${escapeHtml(a.titles.en||'—')}</td>
+        <td>${a.category}</td>
+        <td>${escapeHtml(a.author||'')}</td>
+        <td><span class="status ${a.status}">${a.status}</span></td>
+        <td>${new Date(a.updatedAt).toLocaleString()}</td>
+        <td style="text-align:right">
+          <button class="btn ghost" data-act="edit" data-id="${a.id}">Edit</button>
+          <button class="btn ghost" data-act="dup" data-id="${a.id}">Duplicate</button>
+          <button class="btn err" data-act="del" data-id="${a.id}">Delete</button>
+        </td>`;
+      rows.appendChild(tr);
+    });
+}
+
+$('#search').addEventListener('input', renderTable);
+$('#filterCat').addEventListener('change', renderTable);
+$('#filterStatus').addEventListener('change', renderTable);
+
+$('#rows').addEventListener('click', e=>{
+  const btn = e.target.closest('button'); if(!btn) return;
+  const id = btn.dataset.id; const act = btn.dataset.act; const a = findById(id);
+  if(act==='edit'){ loadIntoForm(a); }
+  if(act==='dup'){ const copy = { ...a, id: uid(), slug: a.slug+'-copy', createdAt: nowISO(), updatedAt: nowISO(), status:'draft' }; upsertArticle(copy); renderTable(); toast('Duplicated'); }
+  if(act==='del'){ if(confirm('Delete this article?')){ const arr=readArticles().filter(x=>x.id!==id); writeArticles(arr); renderTable(); toast('Deleted'); if(state.currentId===id) resetForm(); } }
+});
+
+function loadIntoForm(a){
+  state.currentId = a.id;
+  fields.category.value = a.category;
+  $('#author').value = a.author||'';
+  fields.slug.value = a.slug;
+  fields.title_en.value = a.titles.en||'';
+  fields.title_so.value = a.titles.so||'';
+  fields.title_ar.value = a.titles.ar||'';
+  fields.body_en.value = a.bodies.en||'';
+  fields.body_so.value = a.bodies.so||'';
+  fields.body_ar.value = a.bodies.ar||'';
+  fields.tags.value = (a.tags||[]).join(', ');
+  fields.readtime.value = a.readMinutes||'';
+  fields.statusToggle.checked = a.status==='published';
+  if(a.image){ imgPrev.src=a.image; imgPrev.classList.remove('hidden'); $('#p_img').src=a.image; $('#p_img').classList.remove('hidden'); }
+  $$('.side nav button').forEach(b=>b.classList.remove('active'));
+  $$('nav button[data-view]')?.find(b=>b.dataset.view==='create')?.classList.add('active');
+  Object.entries(views).forEach(([k,el])=>{ el.classList.toggle('hidden', k!=='create'); });
+  updatePreview();
+}
+
+function escapeHtml(s){
+  return (s||'').replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+}
+
+// Export / Import JSON (for deploying to frontend)
+$('#exportBtn').addEventListener('click', ()=>{
+  const payload = { version: 1, exportedAt: nowISO(), articles: readArticles() };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'articles.json'; a.click();
+  URL.revokeObjectURL(url);
+});
+
+$('#importInput').addEventListener('change', async (e)=>{
+  const f = e.target.files?.[0]; if(!f) return;
+  const txt = await f.text();
+  try{
+    const parsed = JSON.parse(txt);
+    const incoming = Array.isArray(parsed) ? parsed : parsed.articles;
+    if(!Array.isArray(incoming)) throw new Error('Invalid JSON');
+    const existing = readArticles();
+    const merged = [...incoming, ...existing].reduce((acc, a)=>{
+      if(!acc.find(x=>x.id===a.id)) acc.push(a); return acc;
+    }, []);
+    writeArticles(merged);
+    toast(`Imported ${incoming.length} articles`);
+    renderTable();
+  }catch(err){ toast('Import failed: '+err.message); }
+  e.target.value='';
+});
+
+// Tiny toast
+function toast(msg){
+  const t = document.createElement('div');
+  t.textContent = msg; t.style.position='fixed'; t.style.right='16px'; t.style.bottom='16px';
+  t.style.background='#111'; t.style.border='1px solid #222'; t.style.padding='10px 12px'; t.style.borderRadius='10px';
+  t.style.zIndex=9999; t.style.opacity='0.95';
+  document.body.appendChild(t); setTimeout(()=>t.remove(),2200);
+}
+
+// Initialize
+updatePreview();
+renderTable();
+
+</script>
+</body>
+</html>

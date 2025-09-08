@@ -1,26 +1,20 @@
-// // createArticlesTable.ts
-// import { createClient } from './supabaseClient';
+import { supabase } from "./supabaseClient";
+import { loadSQL } from "./utils/loadSQL";
 
-// async function createArticlesTable() {
-//   const sql = `
-//     CREATE TABLE IF NOT EXISTS articles (
-//       id TEXT PRIMARY KEY,
-//       created_at TIMESTAMP DEFAULT now(),
-//       title_en TEXT,
-//       title_so TEXT,
-//       title_ar TEXT,
-//       content_en TEXT,
-//       content_so TEXT,
-//       content_ar TEXT,
-//       image_url TEXT,
-//       video_url TEXT,
-//       category TEXT
-//     );
-//   `;
+export async function createArticlesTable() {
+  try {
+    // load the SQL file served from public/
+    const sql = await loadSQL("/articles.sql");
 
-//   const { data, error } = await createClient.rpc('exec_sql', { sql });
-//   if (error) console.error('Error creating table:', error);
-//   else console.log('Articles table created or already exists.');
-// }
+    const { error } = await supabase.rpc("exec_sql", { sql });
 
-// createArticlesTable();
+    if (error) {
+      console.error("Error creating table:", error.message);
+    } else {
+      console.log("✅ Articles table created (or already exists).");
+    }
+  } catch (err) {
+    console.error("Failed to run createArticlesTable:", err);
+  }
+}
+
