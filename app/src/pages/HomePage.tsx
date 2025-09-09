@@ -1,3 +1,5 @@
+// HomePage.tsx
+
 import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import { Article } from "../types";
@@ -5,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const HomePage: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [heroArticle, setHeroArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
 
   // PIN auth state
@@ -14,14 +17,25 @@ const HomePage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  // Fetch articles
+  // Fetch articles and select a random one for the hero section
   useEffect(() => {
     const fetchArticles = async () => {
       try {
         setLoading(true);
         const { data, error } = await supabase.from("articles").select("*");
         if (error) throw error;
-        if (data) setArticles(data);
+        if (data && data.length > 0) {
+          // Select a random article for the hero section
+          const randomIndex = Math.floor(Math.random() * data.length);
+          const selectedHeroArticle = data[randomIndex];
+          setHeroArticle(selectedHeroArticle);
+
+          // Filter out the hero article from the main articles list
+          const remainingArticles = data.filter(
+            (article) => article.id !== selectedHeroArticle.id
+          );
+          setArticles(remainingArticles.slice(0, 3)); // Display up to 3 side news articles
+        }
       } catch (error) {
         console.error("Error fetching articles:", error);
       } finally {
@@ -32,7 +46,7 @@ const HomePage: React.FC = () => {
     fetchArticles();
   }, []);
 
-  // Handle PIN login
+  // Handle PIN login (unchanged as requested)
   const handleLogin = () => {
     if (pin === "1234" && name.toLowerCase() === "test") {
       setAuthenticated(true);
@@ -79,24 +93,25 @@ const HomePage: React.FC = () => {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="container hero-content">
-          <div className="main-article">
-            <img
-              src="https://placeholder.co/800x600/333333/FFFFFF?text=Politics+Article"
-              alt="Political Article Image"
-            />
-            <div className="main-article-text">
-              <p>POLITICS</p>
-              <h1>
-                <a href="#">Siad Barre, myth and the spectacle of power</a>
-              </h1>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua.
-              </p>
+          {heroArticle && (
+            <div className="main-article">
+              <img
+                src={heroArticle.image_url}
+                alt={heroArticle.title_en}
+              />
+              <div className="main-article-text">
+                <p>{heroArticle.category.toUpperCase()}</p>
+                <h1>
+                  <Link to={`/story/${heroArticle.id}`}>{heroArticle.title_en}</Link>
+                </h1>
+                <p>
+                  {heroArticle.description_en}
+                </p>
+              </div>
             </div>
-          </div>
+          )}
           <div className="side-news">
-            {articles.slice(0, 3).map((article) => (
+            {articles.map((article) => (
               <div className="news-card" key={article.id}>
                 <img src={article.image_url} alt={article.title_en} />
                 <div className="news-card-content">

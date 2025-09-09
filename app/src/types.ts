@@ -1,6 +1,5 @@
 // types.ts
 
-
 export interface Article {
   id: string;
   created_at: string;
@@ -12,5 +11,5 @@ export interface Article {
   content_ar: string;
   image_url: string;
   video_url?: string;
-  category: string;
+  category: "politics" | "opinion" | "culture" | "multimedia" | "interviews" | "news" | "business" | "education" | "entertainment" | "health" | "sports" | "technology";
 }
