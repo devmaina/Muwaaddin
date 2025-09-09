@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import LanguageToggle from './LanguageToggle';
+import './index.css'; 
 
 const Header: React.FC = () => {
   return (
@@ -20,7 +21,7 @@ const Header: React.FC = () => {
         </div>
         <div className="main-nav">
           <div className="logo">
-            <img src="https://placeholder.co/50x50/333333/FFFFFF?text=Logo" alt="Muwaaddin Logo" />
+            <img src="/muwaadin-logo.JPG" alt="Muwaaddin Logo" />
             <Link to="/">MUWAADDIN</Link>
           </div>
           <ul>

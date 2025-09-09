@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
       <div className="container">
         <div className="footer-content">
           <div className="footer-logo">
-            <img src="https://placeholder.co/50x50/333333/FFFFFF?text=Logo" alt="Muwaaddin Logo" />
+            <img src="/muwaadin-logo.JPG" alt="Muwaaddin Logo" />
             <span>MUWAADDIN</span>
             <div className="social-icons">
               <a href="#"><i className="fab fa-facebook-f"></i></a>
